@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="sample1" format="xml">
+      <types:example format="xml" element="{urn:com.workday/bsvc}Get_Learning_Blended_Courses_Request" location="examples/sample.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#53cc32e6-24c1-4a70-8962-ecdfb442545f">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="sample1"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#79fbebcd-a72e-4007-8131-1f6b011798ac">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="sample1"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

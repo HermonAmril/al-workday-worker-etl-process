@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:cloudhub="http://www.mulesoft.org/schema/mule/cloudhub" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:workday="http://www.mulesoft.org/schema/mule/workday" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule/cloudhub/current/mule-cloudhub.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="eb2a4796-f21b-4606-a12a-8bb65c5221c1" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	
+	<flow name="workdayFlow" doc:id="7ee2db91-b0e8-4509-9b25-ca401437a02a" >
+		<scheduler doc:name="Scheduler" doc:id="59407f82-64eb-4999-9801-eff1bbb13b71" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="10" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="read page" doc:id="0c9d3916-bfee-42d5-808b-d57c383ee262" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+readUrl("classpath://examples/page.json")]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<foreach doc:name="For Each" doc:id="9c4a6784-1910-47ba-b9a5-85510a547647" collection="#[payload.page]">
+			<set-variable value="#[payload]" doc:name="page number" doc:id="bae91886-ad21-491b-bd08-ff99be5f024a" variableName="page"/>
+			<ee:transform doc:name="requested parameter" doc:id="53cc32e6-24c1-4a70-8962-ecdfb442545f">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 urn:com.workday/bsvc
+---
+{ 
+	ns0#Get_Workers_Request: {
+		
+		ns0#Response_Filter: {
+			ns0#Page: payload,
+			ns0#Count: 100
+			},
+		ns0#Response_Group: {
+			ns0#Include_Reference: true,
+			ns0#Include_Personal_Information: true,
+			ns0#Include_Additional_Jobs: true,
+			ns0#Include_Employment_Information: true,
+			ns0#Include_Compensation: true,
+			ns0#Include_Organizations: true,
+			ns0#Exclude_Organization_Support_Role_Data: true,
+			///ns0#Exclude_Location_Hierarchies: false,
+			ns0#Exclude_Cost_Centers: false,
+			ns0#Exclude_Cost_Center_Hierarchies: false,
+			ns0#Exclude_Companies: true,
+			ns0#Exclude_Company_Hierarchies: true,
+			ns0#Exclude_Matrix_Organizations: true,
+			ns0#Exclude_Pay_Groups: true,
+			ns0#Exclude_Regions: true,
+			ns0#Exclude_Region_Hierarchies: true,
+			ns0#Exclude_Supervisory_Organizations: true,
+			ns0#Exclude_Teams: true,
+			///ns0#Exclude_Custom_Organizations: false,
+			///ns0#Include_Roles: false,
+			ns0#Include_Management_Chain_Data: true,
+			ns0#Include_Multiple_Managers_in_Management_Chain_Data: true,
+			ns0#Include_Benefit_Enrollments: true,
+			ns0#Include_Benefit_Eligibility: true,
+			///ns0#Include_Related_Persons: false,
+			///ns0#Include_Qualifications: false,
+			///ns0#Include_Employee_Review: false,
+			///ns0#Include_Goals: false,
+			ns0#Include_Development_Items: true,
+			ns0#Include_Skills: true,
+			///ns0#Include_Photo: false,
+			ns0#Include_Worker_Documents: true,
+			ns0#Include_Transaction_Log_Data: true,
+			ns0#Include_Subevents_for_Corrected_Transaction: true,
+			ns0#Include_Subevents_for_Rescinded_Transaction: true,
+			///ns0#Include_Succession_Profile: false,
+			ns0#Include_Talent_Assessment: true,
+			ns0#Include_Employee_Contract_Data: true,
+			ns0#Include_Contracts_for_Terminated_Workers: true,
+			ns0#Include_Collective_Agreement_Data: true,
+			///ns0#Include_Probation_Period_Data: false,
+			ns0#Include_Extended_Employee_Contract_Details: true,
+			///ns0#Include_Feedback_Received: false,
+			ns0#Include_User_Account: true,
+			ns0#Include_Career: true,
+			ns0#Include_Account_Provisioning: true,
+			ns0#Include_Background_Check_Data: true,
+			///ns0#Include_Contingent_Worker_Tax_Authority_Form_Informatio: false,
+			ns0#Exclude_Funds: true,
+			ns0#Exclude_Fund_Hierarchies: true,
+			ns0#Exclude_Grants: true,
+			///ns0#Exclude_Grant_Hierarchies: false,
+			ns0#Exclude_Business_Units: true,
+			///ns0#Exclude_Business_Unit_Hierarchies: false,
+			///ns0#Exclude_Programs: false,
+			ns0#Exclude_Program_Hierarchies: true,
+			ns0#Exclude_Gifts: true,
+			ns0#Exclude_Gift_Hierarchies: true
+		}
+	}
+}
+
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			<logger level="INFO" doc:name="Logger" doc:id="9d48a962-baa4-4660-bd87-6f35f1676ea9" message="Input == #[payload]" />
+			<until-successful maxRetries="5" doc:name="Until Successful" doc:id="04945af3-cdee-4871-827d-f15a0443b69f" >
+				<workday:staffing doc:name="Staffing" doc:id="fa6e87c2-cd5b-411d-a297-223d9ccc53f6" config-ref="Workday_Config" operation="Get_Workers">
+			<non-repeatable-stream />
+					<workday:content><![CDATA[#[output application/xml --- payload]]]></workday:content>
+		</workday:staffing>
+			</until-successful>
+			<ee:transform doc:name="json format" doc:id="fcc8a6c9-fe6b-48fa-b597-434fe74930da" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<ee:transform doc:name="mapping" doc:id="52ce45e9-5161-4faa-8279-c2a7da1c5f2a">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+
+payload.Get_Workers_Response.Response_Data pluck ((item, value) -> 
+	
+Worker: {firstName: item.Worker_Data.Personal_Data.Name_Data.Legal_Name_Data.Name_Detail_Data.First_Name,
+middleName: item.Worker_Data.Personal_Data.Name_Data.Legal_Name_Data.Name_Detail_Data.Middle_Name,
+lastName: item.Worker_Data.Personal_Data.Name_Data.Legal_Name_Data.Name_Detail_Data.Last_Name,
+id: item.Worker_Data.Personal_Data.Name_Data.Legal_Name_Data.Name_Detail_Data.Country_Reference.ID,
+phoneNumber: item.Worker_Data.Personal_Data.Contact_Data.Phone_Data.Phone_Number,
+countryISOCode: item.Worker_Data.Personal_Data.Contact_Data.Phone_Data.Country_ISO_Code,
+internationalPhoneCode: item.Worker_Data.Personal_Data.Contact_Data.Phone_Data.International_Phone_Code,
+postalCode_Home: item.Worker_Data.Personal_Data.Contact_Data.Address_Data.Postal_Code,
+municipality_Home: item.Worker_Data.Personal_Data.Contact_Data.Address_Data.Municipality,
+addressLineData_Home: item.Worker_Data.Personal_Data.Contact_Data.Address_Data.Address_Line_Data,
+countryRegionDescriptor_Home: item.Worker_Data.Personal_Data.Contact_Data.Address_Data.Country_Region_Descriptor,
+emailAddress_Personal: item.Worker_Data.Personal_Data.Contact_Data.*Email_Address_Data[1].Email_Address,
+workerID: item.Worker_Data.Worker_ID,
+terminated: item.Worker_Data.Employment_Data.Worker_Status_Data.Terminated,
+hireDate: item.Worker_Data.Employment_Data.Worker_Status_Data.Hire_Date,
+terminationLastDayOfWork: item.Worker_Data.Employment_Data.Worker_Status_Data.Termination_Last_Day_of_Work,
+businessTitle: item.Worker_Data.Employment_Data.Worker_Job_Data.Position_Data.Business_Title,
+active: item.Worker_Data.Employment_Data.Worker_Status_Data.Active,
+postalCode_Work: item.Worker_Data.Personal_Data.Contact_Data.*Address_Data[1].Postal_Code,
+municipality_Work:item.Worker_Data.Personal_Data.Contact_Data.*Address_Data[1].Municipality,
+addressLineData_Work: item.Worker_Data.Personal_Data.Contact_Data.*Address_Data[1].Address_Line_Data,
+countryRegionDescriptor_Work: item.Worker_Data.Personal_Data.Contact_Data.*Address_Data[1].Country_Region_Descriptor,
+emailAddress_Work: item.Worker_Data.Personal_Data.Contact_Data.*Email_Address_Data[0].Email_Address,
+organization_Id: item.Worker_Data.Employment_Data.Worker_Job_Data.Position_Data.Business_Site_Summary_Data.Location_Reference[1],
+costCenterId: item.Worker_Data.Employment_Data.Worker_Job_Data.*Position_Organizations_Data.Position_Organization_Data[0].Organization_Data.Organization_Reference_ID,
+costCenterCode: item.Worker_Data.Employment_Data.Worker_Job_Data.*Position_Organizations_Data.Position_Organization_Data[0].Organization_Data.Organization_Code,
+organizationName: item.Worker_Data.Employment_Data.Worker_Job_Data.*Position_Organizations_Data.Position_Organization_Data[0].Organization_Data.Organization_Name
+})]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			<foreach doc:name="For Each" doc:id="df920175-a107-4f89-8d0c-8eb659669a50" collection="#[payload.Worker]" batchSize="200">
+				<try doc:name="Try" doc:id="562ca256-9da8-4c72-a814-360b31b374dd">
+				<until-successful maxRetries="5" doc:name="Until Successful" doc:id="23c40e5a-4f86-4968-9f61-bfa5f2a0c72a" >
+						<db:bulk-insert doc:name="insert into db" doc:id="751add39-075a-4b1d-8e8f-8613b8012953" config-ref="Database_Config">
+				<db:sql><![CDATA[insert into ${fltpabi.tablename}
+(
+firstName,
+middleName,
+lastName,
+id,
+phoneNumber,
+countryISOCode,
+internationalPhoneCode,
+postalCode_Home,
+municipality_Home,
+addressLineData_Home,
+countryRegionDescriptor_Home,
+workerID,
+emailAddress_Personal,
+terminated,
+hireDate,
+terminationLastDayOfWork,
+businessTitle,
+organizationName,
+organization_Id,
+active,
+postalCode_Work,
+municipality_Work,
+addressLineData_Work,
+countryRegionDescriptor_Work,
+emailAddress_Work,
+costCenterId,
+costCenterCode       
+)VALUES
+(
+:firstName,
+:middleName,
+:lastName,
+:id,
+:phoneNumber,
+:countryISOCode,
+:internationalPhoneCode,
+:postalCode_Home,
+:municipality_Home,
+:addressLineData_Home,
+:countryRegionDescriptor_Home,
+:workerID,
+:emailAddress_Personal,
+:terminated,
+:hireDate,
+:terminationLastDayOfWork,
+:businessTitle,
+:organizationName,
+:organization_Id,
+:active,
+:postalCode_Work,
+:municipality_Work,
+:addressLineData_Work,
+:countryRegionDescriptor_Work,
+:emailAddress_Work,
+:costCenterId,
+:costCenterCode
+)]]></db:sql>
+			</db:bulk-insert>
+					</until-successful>
+					<error-handler>
+					<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3b7d4326-dcef-469b-bf3a-7fe8ff8e6ae7" type="DB:CONNECTIVITY">
+						<ee:transform doc:name="Transform Message" doc:id="6dbc5cd0-a93f-4eb9-a23f-c312b4358617">
+							<ee:message>
+								<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+"Error Type": error.errorType,
+"Error Name": error.description,
+"Error Description": error.detailedDescription
+
+}]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+					</on-error-propagate>
+					<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="40f90850-e467-4d53-b1ad-0ff045247010" type="DB:QUERY_EXECUTION">
+						<ee:transform doc:name="Transform Message" doc:id="4efb6b7f-ce46-4f73-a7bb-0ce6574068a8">
+							<ee:message>
+								<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+"Error Type": error.errorType,
+"Error Name": error.description,
+"Error Description": error.detailedDescription
+
+}]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+					</on-error-propagate>
+				</error-handler>
+			</try>
+		</foreach>
+		</foreach>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="fff6962f-ade2-4dd6-aeb8-3ce84a5b1c28">
+				<ee:transform doc:name="Transform Message" doc:id="88a98ae5-90cb-47b1-a2e8-10aeda418029" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="errorDetail" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"Error Type": error.errorType,
+"Error Name": error.description,
+"Error Description": error.detailedDescription
+
+}]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<cloudhub:create-notification doc:name="Create Notification" doc:id="80dbabff-a0fa-4ace-a2fc-ec2bfb732732" config-ref="CloudHub_Config" domain="${cloudhub.domain}" priority="ERROR">
+					<cloudhub:message ><![CDATA[#[vars.errorDetail]]]></cloudhub:message>
+				</cloudhub:create-notification>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>
