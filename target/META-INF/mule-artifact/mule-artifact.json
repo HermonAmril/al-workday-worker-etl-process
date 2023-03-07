@@ -1,0 +1,31 @@
+{
+  "configs": [
+    "global.xml",
+    "get-workday-worker.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:workday:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.4.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "application-types.xml",
+        "examples/page.json",
+        "examples/sample.xml",
+        "get-workday-worker.xml",
+        "global.xml",
+        "log4j2.xml",
+        "property/al-workday-worker-dev.properties",
+        "property/al-workday-worker-prod.properties"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

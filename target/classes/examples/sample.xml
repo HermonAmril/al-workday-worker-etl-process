@@ -1,0 +1,137 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bsvc="urn:com.workday/bsvc">
+   <soapenv:Header>
+         </soapenv:Header>
+
+   <soapenv:Body>
+      <bsvc:Get_Workers_Request bsvc:version="">
+         <!--Optional:-->
+     
+           <bsvc:Response_Filter>
+                        <!--Optional:-->
+        				<bsvc:Page>1</bsvc:Page>
+        				  <!--Optional:-->
+        				  <bsvc:Count>1</bsvc:Count>
+					  <!--Optional:-->
+		 </bsvc:Response_Filter>
+		 <!--Optional:-->
+        <bsvc:Response_Group>
+<!-- Optional: -->
+<bsvc:Include_Reference>true</bsvc:Include_Reference>
+<!-- Optional: -->
+<bsvc:Include_Personal_Information>true</bsvc:Include_Personal_Information>
+<!-- Optional: -->
+<bsvc:Include_Additional_Jobs>true</bsvc:Include_Additional_Jobs>
+<!-- Optional: -->
+<bsvc:Include_Employment_Information>true</bsvc:Include_Employment_Information>
+<!-- Optional: -->
+<bsvc:Include_Compensation>true</bsvc:Include_Compensation>
+<!-- Optional: -->
+<bsvc:Include_Organizations>true</bsvc:Include_Organizations>
+<!-- Optional: -->
+<bsvc:Exclude_Organization_Support_Role_Data>true</bsvc:Exclude_Organization_Support_Role_Data>
+<!-- Optional: -->
+<bsvc:Exclude_Location_Hierarchies>true</bsvc:Exclude_Location_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Cost_Centers>true</bsvc:Exclude_Cost_Centers>
+<!-- Optional: -->
+<bsvc:Exclude_Cost_Center_Hierarchies>true</bsvc:Exclude_Cost_Center_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Companies>false</bsvc:Exclude_Companies>
+<!-- Optional: -->
+<bsvc:Exclude_Company_Hierarchies>true</bsvc:Exclude_Company_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Matrix_Organizations>true</bsvc:Exclude_Matrix_Organizations>
+<!-- Optional: -->
+<bsvc:Exclude_Pay_Groups>true</bsvc:Exclude_Pay_Groups>
+<!-- Optional: -->
+<bsvc:Exclude_Regions>true</bsvc:Exclude_Regions>
+<!-- Optional: -->
+<bsvc:Exclude_Region_Hierarchies>true</bsvc:Exclude_Region_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Supervisory_Organizations>true</bsvc:Exclude_Supervisory_Organizations>
+<!-- Optional: -->
+<bsvc:Exclude_Teams>true</bsvc:Exclude_Teams>
+<!-- Optional: -->
+<bsvc:Exclude_Custom_Organizations>true</bsvc:Exclude_Custom_Organizations>
+<!-- Optional: -->
+<bsvc:Include_Roles>true</bsvc:Include_Roles>
+<!-- Optional: -->
+<bsvc:Include_Management_Chain_Data>true</bsvc:Include_Management_Chain_Data>
+<!-- Optional: -->
+<bsvc:Include_Multiple_Managers_in_Management_Chain_Data>true</bsvc:Include_Multiple_Managers_in_Management_Chain_Data>
+<!-- Optional: -->
+<bsvc:Include_Benefit_Enrollments>true</bsvc:Include_Benefit_Enrollments>
+<!-- Optional: -->
+<bsvc:Include_Benefit_Eligibility>true</bsvc:Include_Benefit_Eligibility>
+<!-- Optional: -->
+<bsvc:Include_Related_Persons>true</bsvc:Include_Related_Persons>
+<!-- Optional: -->
+<bsvc:Include_Qualifications>true</bsvc:Include_Qualifications>
+<!-- Optional: -->
+<bsvc:Include_Employee_Review>true</bsvc:Include_Employee_Review>
+<!-- Optional: -->
+<bsvc:Include_Goals>true</bsvc:Include_Goals>
+<!-- Optional: -->
+<bsvc:Include_Development_Items>true</bsvc:Include_Development_Items>
+<!-- Optional: -->
+<bsvc:Include_Skills>true</bsvc:Include_Skills>
+<!-- Optional: -->
+<bsvc:Include_Photo>true</bsvc:Include_Photo>
+<!-- Optional: -->
+<bsvc:Include_Worker_Documents>true</bsvc:Include_Worker_Documents>
+<!-- Optional: -->
+<bsvc:Include_Transaction_Log_Data>true</bsvc:Include_Transaction_Log_Data>
+<!-- Optional: -->
+<bsvc:Include_Subevents_for_Corrected_Transaction>true</bsvc:Include_Subevents_for_Corrected_Transaction>
+<!-- Optional: -->
+<bsvc:Include_Subevents_for_Rescinded_Transaction>true</bsvc:Include_Subevents_for_Rescinded_Transaction>
+<!-- Optional: -->
+<bsvc:Include_Succession_Profile>true</bsvc:Include_Succession_Profile>
+<!-- Optional: -->
+<bsvc:Include_Talent_Assessment>true</bsvc:Include_Talent_Assessment>
+<!-- Optional: -->
+<bsvc:Include_Employee_Contract_Data>true</bsvc:Include_Employee_Contract_Data>
+<!-- Optional: -->
+<bsvc:Include_Contracts_for_Terminated_Workers>true</bsvc:Include_Contracts_for_Terminated_Workers>
+<!-- Optional: -->
+<bsvc:Include_Collective_Agreement_Data>true</bsvc:Include_Collective_Agreement_Data>
+<!-- Optional: -->
+<bsvc:Include_Probation_Period_Data>true</bsvc:Include_Probation_Period_Data>
+<!-- Optional: -->
+<bsvc:Include_Extended_Employee_Contract_Details>true</bsvc:Include_Extended_Employee_Contract_Details>
+<!-- Optional: -->
+<bsvc:Include_Feedback_Received>true</bsvc:Include_Feedback_Received>
+<!-- Optional: -->
+<bsvc:Include_User_Account>true</bsvc:Include_User_Account>
+<!-- Optional: -->
+<bsvc:Include_Career>true</bsvc:Include_Career>
+<!-- Optional: -->
+<bsvc:Include_Account_Provisioning>true</bsvc:Include_Account_Provisioning>
+<!-- Optional: -->
+<bsvc:Include_Background_Check_Data>true</bsvc:Include_Background_Check_Data>
+<!-- Optional: -->
+<bsvc:Include_Contingent_Worker_Tax_Authority_Form_Information>true</bsvc:Include_Contingent_Worker_Tax_Authority_Form_Information>
+<!-- Optional: -->
+<bsvc:Exclude_Funds>true</bsvc:Exclude_Funds>
+<!-- Optional: -->
+<bsvc:Exclude_Fund_Hierarchies>true</bsvc:Exclude_Fund_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Grants>true</bsvc:Exclude_Grants>
+<!-- Optional: -->
+<bsvc:Exclude_Grant_Hierarchies>true</bsvc:Exclude_Grant_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Business_Units>true</bsvc:Exclude_Business_Units>
+<!-- Optional: -->
+<bsvc:Exclude_Business_Unit_Hierarchies>true</bsvc:Exclude_Business_Unit_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Programs>true</bsvc:Exclude_Programs>
+<!-- Optional: -->
+<bsvc:Exclude_Program_Hierarchies>true</bsvc:Exclude_Program_Hierarchies>
+<!-- Optional: -->
+<bsvc:Exclude_Gifts>true</bsvc:Exclude_Gifts>
+<!-- Optional: -->
+<bsvc:Exclude_Gift_Hierarchies>true</bsvc:Exclude_Gift_Hierarchies>
+</bsvc:Response_Group>
+      </bsvc:Get_Workers_Request>
+   </soapenv:Body>
+</soapenv:Envelope>
